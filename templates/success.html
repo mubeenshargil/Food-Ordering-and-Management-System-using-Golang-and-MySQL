@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>OMS | Order Success</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f5f5f5;
+        }
+
+        .box{
+            width:600px;
+            margin:auto;
+            margin-top:100px;
+            background:white;
+            padding:40px;
+            text-align:center;
+            border-radius:10px;
+            box-shadow:0 0 10px #ccc;
+        }
+
+        a{
+            background:black;
+            color:white;
+            padding:15px 25px;
+            text-decoration:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>✅ Order Placed Successfully</h1>
+
+    <h2>Thank You {{ .name }}</h2>
+
+    <p>
+        Your order has been received successfully.
+    </p>
+
+    <br><br>
+    <h2>Track your order by clicking <a href="/track-order/{{ .orderID }}">here</a>.</h2>
+     <h3>Your Order ID is <b> {{ .orderID }}</b></h3>
+    <br><br>
+    <a href="/">
+        Back To Menu
+    </a>
+
+</div>
+
+</body>
+
+</html>

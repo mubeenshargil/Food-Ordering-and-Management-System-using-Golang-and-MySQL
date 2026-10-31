@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>OMS | Order Tracking</title>
+
+<style>
+     .tracking-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    background: #f1f3f5;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.step.active {
+    background: #198754;
+    color: white;
+}
+
+.tracking-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.step {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 15px;
+    background: #f1f3f5;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #6c757d;
+    transition: 0.3s;
+}
+
+.step.active {
+    background: #198754;
+    color: white;
+}
+</style>
+</head>
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-body p-4">
+
+            <div class="text-center mb-4">
+
+                <h2 class="fw-bold">
+                    🍔 Order #{{ .order.ID }}
+                </h2>
+
+                <small class="text-muted">
+                    Track your order in real time
+                </small>
+
+            </div>
+            
+            <hr class="my-4">
+
+        <h4 class="text-center mb-4">
+            🍔 Ordered Item
+        </h4>
+
+        <div class="row align-items-center">
+
+            <div class="col-md-4 text-center">
+
+                <img src="{{ .order.MenuImage }}"
+                    class="img-fluid rounded shadow"
+                    style="max-height:250px;">
+
+            </div>
+
+            <div class="col-md-8">
+
+                <h4>
+                    {{ .order.MenuName }}
+                </h4>
+
+                <p class="text-muted">
+                    {{ .order.MenuDescription }}
+                </p>
+
+                <h4 class="text-success">
+                    €{{ printf "%.2f" .order.Price }}
+                </h4>
+
+                <h4>
+                    Quantity:
+                    {{ .order.Quantity }}
+                </h4>
+
+            </div>
+
+        </div>
+        
+        <hr class="my-4">
+
+            <div class="row text-center">
+
+                <div class="col-md-4">
+
+                    <h4 class="text-muted">
+                        Customer
+                    </h4>
+
+                    <h5>
+                        {{ .order.CustomerName }}
+                        {{ .order.CustomerSurname }}
+                    </h5>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h4 class="text-muted">
+                        Current Status
+                    </h4>
+
+                    <span class="badge bg-success px-4 py-2">
+                        {{ .order.Status }}
+                    </span>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h4 class="text-muted">
+                        Total Amount
+                    </h4>
+
+                    <h5>
+                        €{{ printf "%.2f" .order.Total }}
+                    </h5>
+
+                </div>
+            </div>
+            <div class="row text-center">
+                  <div class="col-md-4">
+
+                    <h4 class="text-muted">
+                        Phone
+                    </h4>
+
+                    <h5>
+                        {{ .order.Phone }}
+                    </h5>
+
+                </div>
+                <div class="col-md-4">
+
+                    <h4 class="text-muted">
+                        Address
+                    </h4>
+
+                    <h5>
+                        {{ .order.Address }}
+                    </h5>
+
+                </div>
+
+            </div>
+
+            <hr class="my-4">
+
+            <h5 class="text-center mb-4">
+                Order Journey
+            </h5>
+
+{{ if eq .order.Status "CANCELLED" }}
+
+    <div class="alert alert-danger text-center">
+
+        <h4>❌ Order Cancelled</h4>
+
+        <p class="mb-0">
+            Your order has been cancelled.
+        </p>
+
+        {{ if .order.Reason }}
+
+        <hr>
+
+        <strong>Reason:</strong>
+
+        <p class="mb-0">
+            {{ .order.Reason }}
+        </p>
+
+        {{ end }}
+
+    </div>
+
+    {{ else }}
+
+    <div class="tracking-wrapper">
+
+        <div class="step {{ if eq .order.Status "PENDING" }}active{{ end }}">
+            Pending
+        </div>
+
+        <div class="step {{ if eq .order.Status `ACCEPTED` }}active{{ end }}">
+            Accepted
+        </div>
+
+        <div class="step {{ if eq .order.Status `PREPARING` }}active{{ end }}">
+            Preparing
+        </div>
+
+        <div class="step {{ if eq .order.Status `READY`  }}active{{ end }}">
+            Ready
+        </div>
+
+        <div class="step {{ if eq .order.Status `ON THE WAY` }}active{{ end }}">
+            On The Way
+        </div>
+
+        <div class="step {{ if eq .order.Status `DELIVERED` }}active{{ end }}">
+            Delivered
+        </div>
+         <div class="step {{ if eq .order.Status `CLOSED` }}active{{ end }}">
+            Closed
+        </div>
+
+    </div>
+
+    {{ end }}
+
+
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+
+</html>

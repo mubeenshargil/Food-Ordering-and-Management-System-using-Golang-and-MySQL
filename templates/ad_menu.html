@@ -1,0 +1,271 @@
+{{ template "header" . }}
+
+{{ template "sidebar" . }}
+
+{{ template "topbar" . }}
+
+<div class="content">
+    <!-- ADD MENU SECTION -->
+
+    <div class="card-box">
+
+        <h3 class="mb-4">
+            Add Menu Item
+        </h3>
+
+        <form action="/admin/menu" method="POST" enctype="multipart/form-data">
+
+            <div class="row">
+
+                <div class="col-md-3 mb-3">
+
+                    <label>Name</label>
+
+                    <input type="text"
+                           name="name"
+                           class="form-control"
+                           >
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <label>Price</label>
+
+                    <input type="text"
+                           name="price"
+                           class="form-control"
+                           >
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <label>Image</label>
+
+                    <input type="file"
+                           name="image"
+                           class="form-control"
+                           >
+
+                </div>
+
+                  <div class="col-md-3 mb-3">
+
+                    <label>Status</label>
+                    <select name="statuss"
+                           class="form-control"
+                           >
+                        <option value="1">Active</option>
+                        <option value="0">In-Active</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Description</label>
+
+                <textarea name="description"
+                          class="form-control"
+                          rows="3"></textarea>
+
+            </div>
+
+            <button class="btn btn-dark" type="submit">
+
+                <i class="fa fa-plus"></i>
+                Add Menu
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- MENU TABLE -->
+
+    <div class="card-box">
+
+        <h3 class="mb-4">
+            All Menu Items
+        </h3>
+
+        <table id="menuTable" class="table table-bordered table-hover">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th width="180">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {{ range .menus }}
+
+                <tr>
+
+                    <td>{{ .ID }}</td>
+
+                    <td>
+                        <img src="{{ .Image }}">
+                    </td>
+
+                    <td>{{ .Name }}</td>
+
+                    <td>{{ .Description }}</td>
+
+                    <td>${{ .Price }}</td>
+
+                    <td>{{ if eq .Status 1 }}
+
+                                Active
+
+                            {{ else }}
+
+                                In-Active
+
+                            {{ end }}
+                    <td>
+
+                        <!-- EDIT BUTTON -->
+
+                        <button class="btn btn-primary btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editModal{{ .ID }}">
+
+                            <i class="fa fa-pen"></i>
+                            Edit
+
+                        </button>
+
+                        <!-- DELETE -->
+
+                        <!-- <a href="/admin/delete-menu/{{ .ID }}"
+                           class="btn btn-danger btn-sm">
+
+                            <i class="fa fa-trash"></i>
+                            Delete
+
+                        </a> -->
+
+                    </td>
+
+                </tr>
+
+                <!-- EDIT MODAL -->
+
+                <div class="modal fade"
+                     id="editModal{{ .ID }}"
+                     tabindex="-1">
+
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+
+                            <form action="/admin/update-menu/{{ .ID }}"
+                                  method="POST">
+
+                                <div class="modal-header">
+
+                                    <h5 class="modal-title">
+                                        Edit Menu Item
+                                    </h5>
+
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"></button>
+
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+
+                                        <label>Name</label>
+
+                                        <input type="text"
+                                               name="name"
+                                               class="form-control"
+                                               value="{{ .Name }}">
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label>Description</label>
+
+                                        <textarea name="description"
+                                                  class="form-control">{{ .Description }}</textarea>
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label>Price</label>
+
+                                        <input type="text"
+                                               name="price"
+                                               class="form-control"
+                                               value="{{ .Price }}">
+
+                                    </div>
+
+                                       <div class="col-md-3 mb-3">
+
+                                    <label>Status</label>
+                                    <select name="statuss"
+                                        class="form-control"
+                                        required>
+                                        <option value="1"  {{ if eq .Status 1 }}
+                                                                selected
+                                                            {{ end }}>Active</option>
+                                        <option value="0" {{ if eq .Status 0 }}
+                                            selected
+                                        {{ end }}>In-Active</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="modal-footer">
+
+                                    <button class="btn btn-success">
+
+                                        Update Menu
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {{ end }}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+{{ template "footer" . }}

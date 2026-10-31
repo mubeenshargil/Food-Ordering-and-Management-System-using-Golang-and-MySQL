@@ -1,0 +1,426 @@
+{{ template "header" . }}
+
+{{ template "sidebar" . }}
+
+{{ template "topbar" . }}
+
+<!-- CONTENT -->
+
+<div class="content">
+
+    <!-- ADD USER -->
+
+    <div class="card-box">
+
+        <h3 class="mb-4">
+            Add User
+        </h3>
+
+        <form action="/admin/add-user"
+              method="POST">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Name</label>
+
+                    <input type="text"
+                           name="name"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Surname</label>
+
+                    <input type="text"
+                           name="surname"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Phone</label>
+
+                    <input type="text"
+                           name="phone"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Email</label>
+
+                    <input type="email"
+                           name="email"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Password</label>
+
+                    <input type="password"
+                           name="password"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Role</label>
+
+                    <select name="role"
+                            class="form-control">
+
+                        <option value="admin">
+                            Admin
+                        </option>
+
+                        <option value="cashier">
+                            Cashier
+                        </option>
+
+                        <option value="customer">
+                            Customer
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                 <div class="col-md-4 mb-3">
+
+                                        <label>Status</label>
+
+                                        <select name="status"
+                                                class="form-control">
+
+                                            <option value="1"
+                                                {{ if eq .status 1 }}
+                                                    selected
+                                                {{ end }}>
+
+                                                Active
+
+                                            </option>
+
+                                            <option value="0"
+                                                {{ if eq .status 0 }}
+                                                    selected
+                                                {{ end }}>
+
+                                                Inactive
+
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-dark">
+
+                <i class="fa fa-plus"></i>
+                Add User
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- USERS TABLE -->
+
+    <div class="card-box">
+
+        <h3 class="mb-4">
+            All Users
+        </h3>
+
+        <table id="usersTable2"
+               class="table table-bordered table-hover">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th width="180">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {{ range .users }}
+
+                <tr>
+
+                    <td>{{ .ID }}</td>
+
+                    <td>{{ .Name }}</td>
+
+                    <td>{{ .Surname }}</td>
+
+                    <td>{{ .Phone }}</td>
+
+                    <td>{{ .Email }}</td>
+
+                    <td>
+                    {{ if eq .Role "admin" }}
+
+                        <span class="badge bg-danger">
+                            Admin
+                        </span>
+
+                    {{ else if eq .Role "cashier" }}
+
+
+                        <span class="badge bg-primary">
+                            Cashier
+                        </span>
+                    
+                    {{ else if eq .Role "customer" }}
+                   
+                    <span class="badge bg-info">
+                            Customer
+                        </span>
+
+                    {{ end }}
+
+                    </td>
+
+                    <td>
+                        {{ if eq .Status 1 }}
+
+                        <span class="badge bg-danger">
+                            Active
+                        </span>
+
+                      {{ else }}
+
+                        <span class="badge bg-primary">
+                            Inactive
+                        </span>
+
+                    {{ end }}
+                    </td>
+
+                    <td>
+
+                        <button class="btn btn-primary btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editUser{{ .ID }}">
+
+                            <i class="fa fa-pen"></i>
+                            Edit
+
+                        </button>
+
+                        <!-- <a href="/admin/delete-user/{{ .ID }}"
+                           class="btn btn-danger btn-sm">
+
+                            <i class="fa fa-trash"></i>
+                            Delete
+
+                        </a> -->
+
+                    </td>
+
+                </tr>
+
+                <!-- EDIT MODAL -->
+
+                <div class="modal fade"
+                     id="editUser{{ .ID }}"
+                     tabindex="-1">
+
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+
+                            <form action="/admin/update-user/{{ .ID }}"
+                                  method="POST">
+
+                                <div class="modal-header">
+
+                                    <h5 class="modal-title">
+                                        Edit User
+                                    </h5>
+
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"></button>
+
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+
+                                        <label>Name</label>
+
+                                        <input type="text"
+                                               name="name"
+                                               class="form-control"
+                                               value="{{ .Name }}">
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label>Surname</label>
+
+                                        <input type="text"
+                                               name="surname"
+                                               class="form-control"
+                                               value="{{ .Surname }}">
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label>Phone</label>
+
+                                        <input type="text"
+                                               name="phone"
+                                               class="form-control"
+                                               value="{{ .Phone }}">
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label>Email</label>
+
+                                        <input type="email"
+                                               name="email"
+                                               class="form-control"
+                                               value="{{ .Email }}">
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label>Role</label>
+
+                                        <select name="role"
+                                                class="form-control">
+
+                                            <option value="admin"
+                                                {{ if eq .Role "admin" }}
+                                                    selected
+                                                {{ end }}>
+
+                                                Admin
+
+                                            </option>
+
+                                            <option value="cashier"
+                                                {{ if eq .Role "cashier" }}
+                                                    selected
+                                                {{ end }}>
+
+                                                Cashier
+
+                                            </option>
+
+                                            <option value="customer"
+                                                {{ if eq .Role "customer" }}
+                                                    selected
+                                                {{ end }}>
+
+                                                Customer
+
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                     <div class="mb-3">
+
+                                        <label>Status</label>
+
+                                        <select name="status"
+                                                class="form-control">
+
+                                            <option value="1"
+                                                {{ if eq .Status 1 }}
+                                                    selected
+                                                {{ end }}>
+
+                                                Active
+
+                                            </option>
+
+                                            <option value="0"
+                                                {{ if eq .Status 0 }}
+                                                    selected
+                                                {{ end }}>
+
+                                                Inactive
+
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+
+                                    <button type="submit"
+                                            class="btn btn-success">
+
+                                        Update User
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {{ end }}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+{{ template "footer" . }}
+
+

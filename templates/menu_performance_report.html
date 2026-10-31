@@ -1,0 +1,56 @@
+{{ template "header" . }}
+
+{{ template "sidebar" . }}
+
+{{ template "topbar" . }}
+
+<div class="content">
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover reportTab">
+
+                <thead>
+
+                    <tr>
+                        <th>Menu Item</th>
+                        <th>Total Orders</th>
+                        <th>Total Quantity Sold</th>
+                        <th>Revenue (€)</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {{ range .report }}
+
+                    <tr>
+
+                        <td>{{ .MenuName }}</td>
+
+                        <td>{{ .TotalOrders }}</td>
+
+                        <td>{{ .TotalQuantity }}</td>
+
+                        <td>
+                            €{{ printf "%.2f" .Revenue }}
+                        </td>
+
+                    </tr>
+
+                    {{ end }}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{{ template "footer" . }}

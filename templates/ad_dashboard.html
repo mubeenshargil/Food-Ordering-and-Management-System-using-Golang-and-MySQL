@@ -1,0 +1,159 @@
+{{ template "header" . }}
+
+{{ template "sidebar" . }}
+
+{{ template "topbar" . }}
+
+<div class="content">
+    <h2 class="mb-4">
+        Order Statistics
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="card-box bg-primary text-white">
+                <h2>{{ .totalOrders }}</h2>
+                <p>Total Orders</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-box bg-warning text-white">
+                <h2>{{ .pendingOrders }}</h2>
+                <p>Pending Orders</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-box bg-success text-white">
+                <h2>{{ .closedOrders }}</h2>
+                <p>Closed Orders</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-box bg-danger text-white">
+                <h2>{{ .rejectedOrders }}</h2>
+                <p>Cancelled Orders</p>
+            </div>
+        </div>
+
+    </div>
+
+    <h2 class="mt-5 mb-4">
+        Today's Orders
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="card-box bg-dark text-white">
+                <h2>{{ .todayOrders }}</h2>
+                <p>Total Today Orders</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-box bg-warning text-white">
+                <h2>{{ .todayPending }}</h2>
+                <p>Today's Pending</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-box bg-success text-white">
+                <h2>{{ .todayClosed }}</h2>
+                <p>Today's Closed</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-box bg-danger text-white">
+                <h2>{{ .todayRejected }}</h2>
+                <p>Today's Cancelled</p>
+            </div>
+        </div>
+
+    </div>
+
+    <h2 class="mb-4">
+        Sales Statistics
+    </h2>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card bg-success text-white">
+
+                <div class="card-body">
+
+                    <h6>Total Sales</h6>
+
+                    <h3>
+                        €{{ printf "%.2f" .totalSales }}
+                    </h3>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-success text-white">
+
+                <div class="card-body">
+
+                    <h6>Total Cancelled Sales</h6>
+
+                    <h3>
+                        €{{ printf "%.2f" .totalCancelledSales }}
+                    </h3>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <h2 class="mb-4">
+      Today's  Sales Statistics
+    </h2>
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="card bg-primary text-white">
+
+                <div class="card-body">
+
+                    <h6>Today's Sales</h6>
+
+                    <h3>
+                        €{{ printf "%.2f" .todaySales }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+         <div class="col-md-6">
+
+            <div class="card bg-primary text-white">
+
+                <div class="card-body">
+
+                    <h6>Today Cancelled Sales</h6>
+
+                    <h3>
+                       €{{ printf "%.2f" .todayCancelledSales }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{{ template "footer" . }}

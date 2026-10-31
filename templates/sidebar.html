@@ -1,0 +1,88 @@
+{{ define "sidebar" }}
+
+<div class="sidebar">
+
+    <h2 class="p-4 border-bottom">
+        🍔 OMS
+    </h2>
+    
+      <h3 class="surnameUser">{{ .name }}  {{ .Surname }}</h3>
+        {{ if eq .role "admin" }}
+
+            <a href="/admin/dashboard">
+                <i class="fa fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <a href="/admin/menu">
+                <i class="fa fa-utensils"></i>
+                Menu
+            </a>
+
+            <a href="/admin/orders">
+                <i class="fa fa-shopping-cart"></i>
+                Orders
+            </a>
+
+            <a href="/admin/users">
+                <i class="fa fa-users"></i>
+                Users
+            </a>
+
+        {{ else if eq .role "cashier" }}
+
+            <a href="/cashier/orders">
+                <i class="fa fa-shopping-cart"></i>
+                Orders
+            </a>
+
+        {{ end }}
+
+
+        <li>
+
+    <a data-bs-toggle="collapse"
+       href="#reportsMenu">
+
+        <i class="fas fa-chart-bar"></i>
+        Reports
+
+    </a>
+
+    <div class="collapse"
+         id="reportsMenu">
+
+        <ul class="list-unstyled ms-3">
+
+            <li>
+                <a href="/admin/reports/sales">
+                    Sales Report
+                </a>
+            </li>
+
+            <li>
+                <a href="/admin/reports/menu-performance">
+                    Menu Performance Report
+                </a>
+            </li>
+
+            <li>
+                <a href="/admin/reports/customer-orders">
+                    Customer Orders Report
+                </a>
+            </li>
+
+            <li>
+                <a href="/admin/reports/all-orders">
+                    Orders Report
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</li>
+</div>
+
+{{ end }}

@@ -1,0 +1,152 @@
+{{ template "header" . }}
+
+{{ template "sidebar" . }}
+
+{{ template "topbar" . }}
+
+<div class="content">
+    <form method="GET" action="/admin/reports/all-orders">
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <label>Start Date</label>
+
+                <input type="date" name="startDate" value="{{ .startDate }}" class="form-control">
+
+            </div>
+
+            <div class="col-md-3">
+
+                <label>End Date</label>
+
+                <input type="date" name="endDate" value="{{ .endDate }}" class="form-control">
+
+            </div>
+
+            <div class="col-md-3">
+
+                <label>Status</label>
+
+                <select name="status" class="form-control">
+                   <option value="" {{ if eq .status "" }}selected{{ end }}>
+                        All Status
+                    </option>
+
+                    <option value="PENDING" {{ if eq .status "PENDING" }}selected{{ end }}>
+                        Pending
+                    </option>
+
+                    <option value="ACCEPTED" {{ if eq .status "ACCEPTED" }}selected{{ end }}>
+                        Accepted
+                    </option>
+
+                    <option value="PREPARING" {{ if eq .status "PREPARING" }}selected{{ end }}>
+                        Preparing
+                    </option>
+
+                    <option value="READY" {{ if eq .status "READY" }}selected{{ end }}>
+                        Ready
+                    </option>
+
+                    <option value="ON_THE_WAY" {{ if eq .status "ON THE WAY" }}selected{{ end }}>
+                        On The Way
+                    </option>
+
+                    <option value="DELIVERED" {{ if eq .status "DELIVERED" }}selected{{ end }}>
+                        Delivered
+                    </option>
+
+                    <option value="CLOSED" {{ if eq .status "CLOSED" }}selected{{ end }}>
+                        Closed
+                    </option>
+
+                    <option value="CANCELLED" {{ if eq .status "CANCELLED" }}selected{{ end }}>
+                        Cancelled
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <label>&nbsp;</label>
+
+                <button type="submit"
+                        class="btn btn-primary form-control">
+
+                    Generate Report
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <br>
+
+<div class="card">
+
+    <div class="card-header">
+
+        <h3>Orders Report</h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-hover reportTab">
+
+            <thead>
+
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                    <th>Total (€)</th>
+                    <th>Order Time</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {{ range .report }}
+
+                <tr>
+
+                    <td>{{ .OrderID }}</td>
+
+                    <td>{{ .CustomerName }}</td>
+
+                    <td>{{ .Email }}</td>
+
+                    <td>{{ .Status }}</td>
+
+                    <td>{{ .Reason }}</td>
+
+                    <td>
+                        €{{ printf "%.2f" .Total }}
+                    </td>
+
+                    <td>{{ .OrderTime }}</td>
+
+                </tr>
+
+                {{ end }}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+</div>
+
+{{ template "footer" . }}

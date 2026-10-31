@@ -1,0 +1,153 @@
+{{ template "header" . }}
+
+{{ template "sidebar" . }}
+
+{{ template "topbar" . }}
+
+<div class="content">
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <form method="GET"
+                  action="/admin/reports/sales">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <label>
+                            From Date
+                        </label>
+
+                        <input type="date"
+                               name="from"
+                               value="{{ .from }}"
+                               class="form-control">
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label>
+                            To Date
+                        </label>
+
+                        <input type="date"
+                               name="to"
+                               value="{{ .to }}"
+                               class="form-control">
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label>&nbsp;</label>
+
+                        <button type="submit"
+                                class="btn btn-primary form-control">
+
+                            Generate Report
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="row">
+
+        <div class="col-md-3">
+
+            <div class="card text-center shadow-sm">
+
+                <div class="card-body">
+
+                    <h6>
+                        Total Orders
+                    </h6>
+
+                    <h2>
+                        {{ .report.TotalOrders }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card text-center shadow-sm">
+
+                <div class="card-body">
+
+                    <h6>
+                        Total Revenue
+                    </h6>
+
+                    <h2>
+                        €{{ printf "%.2f" .report.TotalRevenue }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card text-center shadow-sm">
+
+                <div class="card-body">
+
+                    <h6>
+                        Quantity Sold
+                    </h6>
+
+                    <h2>
+                        {{ .report.TotalQuantity }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card text-center shadow-sm">
+
+                <div class="card-body">
+
+                    <h6>
+                        Average Order Value
+                    </h6>
+
+                    <h2>
+                        €{{ printf "%.2f" .report.AverageOrderValue }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{{ template "footer" . }}

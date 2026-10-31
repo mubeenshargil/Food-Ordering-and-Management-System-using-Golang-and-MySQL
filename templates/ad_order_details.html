@@ -1,0 +1,159 @@
+{{ template "header" . }}
+
+{{ template "sidebar" . }}
+
+{{ template "topbar" . }}
+
+<div class="content">
+
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+            Order # {{ .order.ID }}
+        </h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <h3 class="mb-3">
+                    Customer Information
+                </h3>
+
+                <p><strong>First Name:</strong> {{ .order.CustomerName }}</p>
+
+                <p><strong>Last Name:</strong> {{ .order.CustomerSurname }}</p>
+
+                <p><strong>Phone:</strong> {{ .order.Phone }}</p>
+
+                <p><strong>Email:</strong> {{ .order.Email }}</p>
+
+                <p><strong>Address:</strong> {{ .order.Address }}</p>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <h3 class="mb-3">
+                    Order Information
+                </h3>
+
+                <p><strong>Order ID:</strong> {{ .order.ID }}</p>
+
+                <p><strong>Status:</strong> {{ .order.Status }}</p>
+
+                <p><strong>Quantity:</strong> {{ .order.Quantity }}</p>
+
+                <p><strong>Price:</strong> €{{ .order.Price }}</p>
+
+                <p><strong>Total:</strong> €{{ .order.Total }}</p>
+
+                <p><strong>Order Time:</strong> {{ .order.OrderTime }}</p>
+
+                <p><strong>Cancellation Reason:</strong> {{ .order.Reason }}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="card shadow-sm">
+
+    <div class="card-header bg-success text-white">
+
+        <h3 class="mb-0">
+            Menu Details
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-4 text-center">
+
+                <img src="{{ .order.MenuImage }}"
+                     class="img-fluid rounded shadow"
+                     style="max-height:250px;">
+
+            </div>
+
+            <div class="col-md-8">
+
+                <h3>{{ .order.MenuName }}</h3>
+
+                <p>{{ .order.MenuDescription }}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="card shadow-sm mt-4">
+
+    <div class="card-header bg-dark text-white">
+
+        <h4 class="mb-0">
+            Order History
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered">
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                    <th>Updated By</th>
+                    <th>Date & Time</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                {{ range .history }}
+
+                <tr>
+
+                    <td>{{ .ID }}</td>
+
+                    <td>{{ .Status }}</td>
+
+                    <td>{{ .Reason }}</td>
+
+                    <td>{{ .UpdatedBy   }}</td>
+
+                    <td>{{ .UpdatedAt }}</td>
+
+                </tr>
+
+                {{ end }}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+</div>
+
+{{ template "footer" . }}
